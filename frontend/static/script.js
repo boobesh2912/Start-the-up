@@ -50,10 +50,7 @@ async function apiFetch(path, options = {}) {
 
   const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
 
-  if (res.status === 401) {
-    logout();
-    return;
-  }
+  if (res.status === 401) { logout(); return []; }
 
   const data = await res.json();
   if (!res.ok) {

@@ -5,17 +5,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from sqlalchemy import text
-
 from .database import Base, SessionLocal, engine
 from .models import Checkin, User, Event
-from .routes import (
-    admin_router,
-    auth_router,
-    builder_router,
-    checkin_router,
-    events_router,
-    launch_router,
-)
+from .models.checkin_form_model import CheckinForm, FormResponse from .routes import ( admin_router, auth_router, builder_router, checkin_router, events_router, form_router, launch_router, )
 from .services.auth_service import hash_password
 
 app = FastAPI(title="Start The Up Builder Tracker", version="2.0.0")
@@ -33,7 +25,7 @@ app.include_router(checkin_router)
 app.include_router(builder_router)
 app.include_router(launch_router)
 app.include_router(admin_router)
-app.include_router(events_router)
+app.include_router(form_router)
 
 
 @app.get("/health")

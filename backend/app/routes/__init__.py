@@ -1,3 +1,4 @@
+from .form_routes import router as form_router
 from .auth_routes import router as auth_router
 from .checkin_routes import router as checkin_router
 from .builder_routes import router as builder_router
@@ -10,6 +11,6 @@ __all__ = [
     "checkin_router",
     "builder_router",
     "launch_router",
-    "admin_router",
+    "admin_router","form_router",
     "events_router",
 ]

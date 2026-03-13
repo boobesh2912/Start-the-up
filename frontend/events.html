@@ -6,6 +6,7 @@
   <title>Events — Start The Up</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="static/config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Inter', sans-serif; background: #FAFAFA; color: #111111; }
@@ -34,106 +35,7 @@
     </div>
   </section>
 
-  <!-- UPCOMING EVENTS -->
-  <section class="py-12 px-6">
-    <div class="max-w-4xl mx-auto">
-
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="font-semibold text-gray-900">Upcoming</h2>
-        <span class="text-xs text-gray-400">All times IST</span>
-      </div>
-
-      <div class="space-y-4" id="upcomingEvents">
-
-        <div class="event-card p-6 flex flex-col md:flex-row md:items-center gap-6">
-          <!-- Date block -->
-          <div class="flex-shrink-0 text-center bg-gray-50 rounded-2xl px-5 py-4 w-20">
-            <p class="text-2xl font-bold text-gray-900 leading-none">28</p>
-            <p class="text-xs text-gray-500 font-medium mt-1">Mar</p>
-          </div>
-          <!-- Content -->
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <h3 class="font-semibold text-gray-900">Extension Building Cohort — Kickoff</h3>
-              <span class="status-upcoming text-xs font-medium px-2.5 py-0.5 rounded-full">Upcoming</span>
-            </div>
-            <p class="text-sm text-gray-500 mb-3 leading-relaxed">Start your 4-week Chrome extension build with a live kickoff session. Meet your cohort, set your project scope, and get your dev environment ready.</p>
-            <div class="flex items-center gap-4 text-xs text-gray-400">
-              <span class="flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                7:00 PM IST
-              </span>
-              <span class="flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Google Meet (link on WhatsApp)
-              </span>
-            </div>
-          </div>
-          <a href="https://chat.whatsapp.com/your-group-link" target="_blank" class="btn-dark flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-medium">
-            Register
-          </a>
-        </div>
-
-        <div class="event-card p-6 flex flex-col md:flex-row md:items-center gap-6">
-          <div class="flex-shrink-0 text-center bg-gray-50 rounded-2xl px-5 py-4 w-20">
-            <p class="text-2xl font-bold text-gray-900 leading-none">05</p>
-            <p class="text-xs text-gray-500 font-medium mt-1">Apr</p>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <h3 class="font-semibold text-gray-900">Hack Night #3 — Build &amp; Chill</h3>
-              <span class="status-upcoming text-xs font-medium px-2.5 py-0.5 rounded-full">Upcoming</span>
-            </div>
-            <p class="text-sm text-gray-500 mb-3 leading-relaxed">A casual 3-hour co-working session. Come, build, share your screen, get unblocked. No pressure — just builders building.</p>
-            <div class="flex items-center gap-4 text-xs text-gray-400">
-              <span class="flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                9:00 PM – 12:00 AM IST
-              </span>
-              <span class="flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Discord / Google Meet
-              </span>
-            </div>
-          </div>
-          <a href="https://chat.whatsapp.com/your-group-link" target="_blank" class="btn-dark flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-medium">
-            Register
-          </a>
-        </div>
-
-        <div class="event-card p-6 flex flex-col md:flex-row md:items-center gap-6">
-          <div class="flex-shrink-0 text-center bg-gray-50 rounded-2xl px-5 py-4 w-20">
-            <p class="text-2xl font-bold text-gray-900 leading-none">19</p>
-            <p class="text-xs text-gray-500 font-medium mt-1">Apr</p>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <h3 class="font-semibold text-gray-900">Demo Day — Cohort 2 Launch</h3>
-              <span class="status-upcoming text-xs font-medium px-2.5 py-0.5 rounded-full">Upcoming</span>
-            </div>
-            <p class="text-sm text-gray-500 mb-3 leading-relaxed">Every cohort builder presents what they shipped. Public demos, feedback, and the official Launch Wall reveals. Bring your MVP.</p>
-            <div class="flex items-center gap-4 text-xs text-gray-400">
-              <span class="flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                6:00 PM IST
-              </span>
-              <span class="flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Chennai / Online
-              </span>
-            </div>
-          </div>
-          <a href="https://chat.whatsapp.com/your-group-link" target="_blank" class="btn-dark flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-medium">
-            Register
-          </a>
-        </div>
-
-      </div>
-      <div id="eventsEmpty" class="hidden text-center text-sm text-gray-400 mt-8">
-        No upcoming events yet. Check back soon.
-      </div>
-    </div>
-  </section>
+<div class="space-y-4" id="upcomingEvents"> <!-- JS fills this --> </div>
 
   <!-- PAST EVENTS -->
   <section class="py-12 px-6 bg-white border-t border-gray-100">
