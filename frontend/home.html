@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start The Up — A Community for Student Builders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #FAFAFA; color: #111111; }
+    .serif { font-family: 'Instrument Serif', serif; }
+    .fade-up { animation: fadeUp 0.6s ease both; }
+    .fade-up-2 { animation: fadeUp 0.6s 0.15s ease both; }
+    .fade-up-3 { animation: fadeUp 0.6s 0.3s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-grid {
+      background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .badge { background: #F3F4F6; color: #374151; border: 1px solid #E5E7EB; }
+    .stat-card { background: white; border: 1px solid #F0EDE6; border-radius: 20px; }
+    .feature-card { background: white; border: 1px solid #F0EDE6; border-radius: 16px; transition: box-shadow 0.2s, transform 0.2s; }
+    .feature-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.07); transform: translateY(-2px); }
+    .btn-dark { background: #111; color: white; transition: background 0.2s, transform 0.15s; }
+    .btn-dark:hover { background: #333; transform: translateY(-1px); }
+    .btn-outline { background: white; border: 1px solid #E5E7EB; color: #374151; transition: border-color 0.2s, background 0.2s; }
+    .btn-outline:hover { border-color: #9CA3AF; background: #F9FAFB; }
+    .marquee-track { display: flex; gap: 12px; animation: marquee 20s linear infinite; width: max-content; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Navbar -->
+  <div id="navbarMount"></div>
+
+  <!-- HERO -->
+  <section class="hero-grid min-h-[88vh] flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#FAFAFA] pointer-events-none"></div>
+    <div class="text-center max-w-3xl relative z-10">
+
+      <div class="fade-up inline-flex items-center gap-2 badge rounded-full px-4 py-1.5 text-sm font-medium mb-8">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        Tamil Nadu's Student Builder Community
+      </div>
+
+      <h1 class="fade-up-2 serif text-6xl md:text-7xl text-gray-900 leading-tight mb-6">
+        Build real things.<br/>
+        <span class="italic text-gray-500">Ship faster.</span>
+      </h1>
+
+      <p class="fade-up-3 text-lg text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed">
+        Start The Up is a community for student builders who are done just learning — and ready to launch real products, together.
+      </p>
+
+      <div class="fade-up-3 flex flex-wrap items-center justify-center gap-3">
+        <a href="community.html" class="btn-dark inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-medium text-sm">
+          Join the Community
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="login.html" class="btn-outline inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-medium text-sm">
+          Cohort Login
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <section class="py-6 border-y border-gray-100 bg-white overflow-hidden">
+    <div class="marquee-track">
+      <!-- Repeated for seamless loop -->
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Chrome Extensions 🔌</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">SaaS Products ⚡</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Student Builders 🎓</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Tamil Nadu 🇮🇳</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Accountability Cohorts 📅</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Hack Nights 🌙</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Real Launches 🚀</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Open Source 🛠</span>
+      <!-- duplicate for seamless -->
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Chrome Extensions 🔌</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">SaaS Products ⚡</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Student Builders 🎓</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Tamil Nadu 🇮🇳</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Accountability Cohorts 📅</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Hack Nights 🌙</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Real Launches 🚀</span>
+      <span class="badge px-4 py-2 rounded-full text-sm whitespace-nowrap">Open Source 🛠</span>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="py-20 px-6">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="stat-card p-6 text-center">
+        <p class="serif text-4xl text-gray-900 mb-1">4+</p>
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-widest">Cohorts Run</p>
+      </div>
+      <div class="stat-card p-6 text-center">
+        <p class="serif text-4xl text-gray-900 mb-1">50+</p>
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-widest">Builders</p>
+      </div>
+      <div class="stat-card p-6 text-center">
+        <p class="serif text-4xl text-gray-900 mb-1">30+</p>
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-widest">Products Launched</p>
+      </div>
+      <div class="stat-card p-6 text-center">
+        <p class="serif text-4xl text-gray-900 mb-1">100%</p>
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-widest">Free to Join</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="py-20 px-6 bg-white border-y border-gray-100">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-xs uppercase tracking-widest text-gray-400 font-medium mb-3">How it works</p>
+        <h2 class="serif text-4xl text-gray-900">From idea to launched product</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="feature-card p-6">
+          <div class="w-10 h-10 rounded-2xl bg-gray-100 flex items-center justify-center mb-5 text-lg">🎯</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Join a Cohort</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Apply for a 4-week builder cohort focused on shipping a real Chrome extension or product. Small groups, high accountability.</p>
+        </div>
+        <div class="feature-card p-6">
+          <div class="w-10 h-10 rounded-2xl bg-gray-100 flex items-center justify-center mb-5 text-lg">⚡</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Check In Twice a Week</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Share your progress, blockers, and demo links. The cohort dashboard tracks everyone's build progress in real time.</p>
+        </div>
+        <div class="feature-card p-6">
+          <div class="w-10 h-10 rounded-2xl bg-gray-100 flex items-center justify-center mb-5 text-lg">🚀</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Launch on the Wall</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Hit 100% and your project goes live on the Launch Wall — a public showcase of everything built inside Start The Up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILDERS PREVIEW -->
+  <section class="py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-end justify-between mb-10 flex-wrap gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-gray-400 font-medium mb-2">Recent launches</p>
+          <h2 class="serif text-4xl text-gray-900">What members built</h2>
+        </div>
+        <a href="builders.html" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
+          See all builders
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div id="homeBuilders" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="feature-card p-5 animate-pulse">
+          <div class="h-3 bg-gray-100 rounded mb-3 w-2/3"></div>
+          <div class="h-2 bg-gray-100 rounded w-1/2"></div>
+        </div>
+        <div class="feature-card p-5 animate-pulse">
+          <div class="h-3 bg-gray-100 rounded mb-3 w-3/4"></div>
+          <div class="h-2 bg-gray-100 rounded w-1/3"></div>
+        </div>
+        <div class="feature-card p-5 animate-pulse">
+          <div class="h-3 bg-gray-100 rounded mb-3 w-1/2"></div>
+          <div class="h-2 bg-gray-100 rounded w-2/3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPCOMING EVENTS -->
+  <section class="py-20 px-6 bg-white border-y border-gray-100">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-end justify-between mb-10 flex-wrap gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-gray-400 font-medium mb-2">Upcoming events</p>
+          <h2 class="serif text-4xl text-gray-900">Meetups and build nights</h2>
+        </div>
+        <a href="events.html" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
+          View all events
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div id="eventsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="feature-card p-5 animate-pulse">
+          <div class="h-3 bg-gray-100 rounded mb-3 w-2/3"></div>
+          <div class="h-2 bg-gray-100 rounded w-1/2"></div>
+        </div>
+        <div class="feature-card p-5 animate-pulse">
+          <div class="h-3 bg-gray-100 rounded mb-3 w-3/4"></div>
+          <div class="h-2 bg-gray-100 rounded w-1/3"></div>
+        </div>
+        <div class="feature-card p-5 animate-pulse">
+          <div class="h-3 bg-gray-100 rounded mb-3 w-1/2"></div>
+          <div class="h-2 bg-gray-100 rounded w-2/3"></div>
+        </div>
+      </div>
+      <div id="eventsEmpty" class="hidden text-center text-sm text-gray-400 mt-8">
+        No upcoming events yet. Check back soon.
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="py-20 px-6 bg-gray-900">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="serif text-4xl text-white mb-4">Ready to start building?</h2>
+      <p class="text-gray-400 mb-8 text-sm leading-relaxed">The next cohort is forming now. Join the community, apply for a cohort, and ship something real.</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="community.html" class="bg-white text-gray-900 font-medium text-sm px-6 py-3.5 rounded-xl hover:bg-gray-100 transition-colors">
+          Join Community
+        </a>
+        <a href="events.html" class="border border-gray-700 text-gray-300 font-medium text-sm px-6 py-3.5 rounded-xl hover:border-gray-500 transition-colors">
+          View Events
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footerMount"></div>
+
+  <script src="static/script.js"></script>
+  <script>
+    loadComponent('navbarMount', 'shared/navbar.html');
+    loadComponent('footerMount', 'shared/footer.html');
+
+    // Load a few launched builders as preview
+    async function loadHomeBuilders() {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // Show placeholder cards if not logged in
+          document.getElementById('homeBuilders').innerHTML = buildPlaceholderCards();
+          return;
+        }
+        const entries = await apiFetch('/launch-wall');
+        const el = document.getElementById('homeBuilders');
+        if (!entries.length) {
+          el.innerHTML = buildPlaceholderCards();
+          return;
+        }
+        const colors = ['#FEF3C7','#D1FAE5','#DBEAFE','#F3E8FF','#FCE7F3'];
+        const textColors = ['#92400E','#065F46','#1E40AF','#6B21A8','#9D174D'];
+        el.innerHTML = entries.slice(0, 3).map((e, i) => {
+          const ci = i % colors.length;
+          const initials = e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+          return `<div class="feature-card p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-semibold flex-shrink-0"
+                   style="background:${colors[ci]};color:${textColors[ci]}">${initials}</div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900">${e.project_name}</p>
+                <p class="text-xs text-gray-500">by ${e.name}</p>
+              </div>
+            </div>
+            ${e.demo_link
+              ? `<a href="${e.demo_link}" target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1">View project →</a>`
+              : `<span class="text-xs text-gray-400">Launched ✓</span>`}
+          </div>`;
+        }).join('');
+      } catch {
+        document.getElementById('homeBuilders').innerHTML = buildPlaceholderCards();
+      }
+    }
+
+    function buildPlaceholderCards() {
+      const items = [
+        { name: 'FocusFlow', by: 'Boobesh' },
+        { name: 'SkillSwap', by: 'Community Builder' },
+        { name: 'Your Project', by: 'Could be you 👀' },
+      ];
+      return items.map(p => `
+        <div class="feature-card p-5 border-dashed">
+          <p class="text-sm font-semibold text-gray-900 mb-1">${p.name}</p>
+          <p class="text-xs text-gray-400">by ${p.by}</p>
+        </div>`).join('');
+    }
+
+    loadHomeBuilders();
+
+    async function loadUpcomingEvents() {
+      const el = document.getElementById('eventsGrid');
+      try {
+        const events = await apiFetch('/events');
+        if (!events.length) {
+          el.innerHTML = '';
+          document.getElementById('eventsEmpty').classList.remove('hidden');
+          return;
+        }
+        el.innerHTML = events.slice(0, 6).map(e => {
+          const date = e.event_date
+            ? new Date(e.event_date).toLocaleDateString('en-GB', { day:'numeric', month:'short' })
+            : '';
+          const desc = e.description.length > 100 ? e.description.slice(0, 100) + 'â€¦' : e.description;
+          return `
+            <div class="feature-card p-6">
+              <p class="text-xs uppercase tracking-widest text-gray-400 font-medium mb-2">${date}</p>
+              <h3 class="font-semibold text-gray-900 mb-2">${e.title}</h3>
+              <p class="text-sm text-gray-500 mb-4">${desc}</p>
+              ${e.registration_link
+                ? `<a href="${e.registration_link}" target="_blank" class="text-xs text-blue-600 hover:underline inline-flex items-center gap-1">Register â†’</a>`
+                : `<span class="text-xs text-gray-400">Registration coming soon</span>`
+              }
+            </div>
+          `;
+        }).join('');
+      } catch {
+        el.innerHTML = '';
+        document.getElementById('eventsEmpty').classList.remove('hidden');
+      }
+    }
+
+    loadUpcomingEvents();
+  </script>
+</body>
+</html>

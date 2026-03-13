@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Start The Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07070d;
+      --surface: #0f0f17;
+      --surface2: #16161f;
+      --surface3: #1e1e28;
+      --border: #2a2a38;
+      --accent: #6c63ff;
+      --green: #34d399;
+      --red: #ff6584;
+      --yellow: #fbbf24;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; }
+    h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 2rem; padding: 0 0.5rem; }
+    .logo span { color: var(--accent); }
+    .logo small { display: block; font-size: 0.65rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.6rem 0.8rem; border-radius: 8px;
+      cursor: pointer; font-size: 0.85rem; color: var(--muted);
+      transition: all 0.15s; margin-bottom: 2px;
+      border: none; background: none; width: 100%; text-align: left;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active { background: rgba(108,99,255,0.15); color: var(--accent); font-weight: 500; }
+    .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .sidebar-bottom { margin-top: auto; }
+    .btn-logout-side {
+      width: 100%; padding: 0.6rem 0.8rem; border-radius: 8px;
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.82rem; cursor: pointer;
+      transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-logout-side:hover { border-color: var(--red); color: var(--red); }
+
+    /* Main */
+    .main { margin-left: 220px; flex: 1; padding: 2rem; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .page-title { font-size: 1.5rem; font-weight: 800; }
+    .admin-badge { background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3); color: var(--accent); padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.78rem; }
+
+    /* Tabs content */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+    /* Form inputs */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .form-grid.single { grid-template-columns: 1fr; }
+    .field { display: flex; flex-direction: column; gap: 0.3rem; }
+    .field label { font-size: 0.78rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .field input, .field select, .field textarea {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .field select option { background: var(--surface2); }
+
+    /* Buttons */
+    .btn {
+      padding: 0.65rem 1.3rem; border-radius: 8px; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.85rem;
+      border: none; transition: all 0.15s; letter-spacing: 0.02em;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-danger { background: rgba(255,101,132,0.12); border: 1px solid rgba(255,101,132,0.3); color: var(--red); }
+    .btn-danger:hover { background: rgba(255,101,132,0.2); }
+    .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.78rem; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--text); color: var(--text); }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead { background: var(--surface2); }
+    th { padding: 0.75rem 1rem; text-align: left; color: var(--muted); font-weight: 500; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+    td { padding: 0.75rem 1rem; border-top: 1px solid var(--border); vertical-align: top; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.73rem; font-weight: 500; }
+    .badge-green { background: rgba(52,211,153,0.12); color: var(--green); }
+    .badge-yellow { background: rgba(251,191,36,0.12); color: var(--yellow); }
+    .badge-red { background: rgba(255,101,132,0.12); color: var(--red); }
+    .badge-purple { background: rgba(108,99,255,0.12); color: var(--accent); }
+
+    /* Questions builder */
+    .q-item {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .q-item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+    .q-item-body { margin-top: 0.7rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+    /* Alert */
+    .alert { padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem; }
+    .alert-success { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); color: var(--green); }
+    .alert-error { background: rgba(255,101,132,0.1); border: 1px solid rgba(255,101,132,0.3); color: var(--red); }
+
+    /* Stats row */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; }
+    .stat-num { font-size: 2rem; font-weight: 800; font-family: 'Syne', sans-serif; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* Response expand */
+    .response-answers-grid { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
+    .ans-row { font-size: 0.82rem; }
+    .ans-q { color: var(--muted); }
+    .ans-a { color: var(--text); }
+
+    /* Form selector */
+    .form-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .form-pill {
+      padding: 0.4rem 0.9rem; border-radius: 999px; font-size: 0.8rem; cursor: pointer;
+      border: 1px solid var(--border); background: none; color: var(--muted);
+      transition: all 0.15s;
+    }
+    .form-pill.active { background: rgba(108,99,255,0.15); border-color: var(--accent); color: var(--accent); }
+
+    /* Spinner */
+    .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">Start The <span>Up</span><small>Admin Console</small></div>
+  <button class="nav-item active" onclick="showTab('users')" id="tab-users">
+    <span class="nav-icon">👥</span> Users
+  </button>
+  <button class="nav-item" onclick="showTab('forms')" id="tab-forms">
+    <span class="nav-icon">📋</span> Check-in Forms
+  </button>
+  <button class="nav-item" onclick="showTab('responses')" id="tab-responses">
+    <span class="nav-icon">📊</span> Responses
+  </button>
+  <div class="sidebar-bottom">
+    <button class="btn-logout-side" onclick="logout()">← Sign out</button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+  <div class="topbar">
+    <div class="page-title" id="pageTitle">Users</div>
+    <div class="admin-badge" id="adminName">Admin</div>
+  </div>
+
+  <div id="globalAlert"></div>
+
+  <!-- ── USERS TAB ── -->
+  <div class="tab-content active" id="users-tab">
+    <div class="card">
+      <div class="card-title">➕ Create New User</div>
+      <div class="form-grid" id="createUserForm">
+        <div class="field"><label>Full Name</label><input type="text" id="u_name" placeholder="John Doe" /></div>
+        <div class="field"><label>Email</label><input type="email" id="u_email" placeholder="john@example.com" /></div>
+        <div class="field"><label>Password</label><input type="password" id="u_password" placeholder="••••••••" /></div>
+        <div class="field"><label>Project Name</label><input type="text" id="u_project" placeholder="My Startup" /></div>
+        <div class="field"><label>Cohort</label><input type="text" id="u_cohort" value="Cohort 1" /></div>
+        <div class="field"><label>Role</label>
+          <select id="u_role">
+            <option value="false">Member</option>
+            <option value="true">Admin</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:1rem;" onclick="createUser()">Create User</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👥 All Users</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Project</th><th>Cohort</th><th>Role</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORMS TAB ── -->
+  <div class="tab-content" id="forms-tab">
+    <div class="card">
+      <div class="card-title">📋 Create Check-in Form</div>
+      <div class="form-grid">
+        <div class="field" style="grid-column:1/-1"><label>Form Title</label><input type="text" id="f_title" placeholder="Week 3 Check-in" /></div>
+        <div class="field" style="grid-column:1/-1"><label>Description (optional)</label><textarea id="f_desc" placeholder="What is this check-in about?"></textarea></div>
+        <div class="field"><label>Publish At (IST)</label><input type="datetime-local" id="f_publish" /></div>
+        <div class="field" style="display:flex;align-items:flex-end;">
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-size:0.82rem;color:var(--muted);width:100%;">⏰ Closes automatically after <strong style="color:var(--text)">24 hours</strong></div>
+        </div>
+      </div>
+
+      <!-- Questions builder -->
+      <div style="margin-top:1.2rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;">
+          <div style="font-size:0.85rem;font-weight:600;">Questions</div>
+          <button class="btn btn-ghost btn-sm" onclick="addQuestion()">+ Add Question</button>
+        </div>
+        <div id="questionsList"></div>
+      </div>
+
+      <button class="btn btn-primary" style="margin-top:1rem;" onclick="createForm()">Schedule Form</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 All Forms</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Title</th><th>Publish</th><th>Close</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="formsTable"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESPONSES TAB ── -->
+  <div class="tab-content" id="responses-tab">
+    <div class="card">
+      <div class="card-title">📊 View Responses by Form</div>
+      <div class="form-selector" id="formPills">
+        <span style="color:var(--muted);font-size:0.85rem;">Loading forms...</span>
+      </div>
+      <div id="responsesTable">
+        <p style="color:var(--muted);font-size:0.85rem;">Select a form above to view responses.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="static/script.js"></script>
+<script>
+  const API = window.API_BASE || 'http://localhost:8000';
+  let questionCount = 0;
+  let allForms = [];
+  let selectedFormId = null;
+
+  function getToken() { return localStorage.getItem('token'); }
+  function logout() { localStorage.removeItem('token'); window.location.href = 'login.html'; }
+
+  function apiFetch(path, opts = {}) {
+    const token = getToken();
+    return fetch(API + path, {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        ...(opts.headers || {})
+      }
+    });
+  }
+
+  function showAlert(msg, type = 'success') {
+    const box = document.getElementById('globalAlert');
+    box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+    setTimeout(() => box.innerHTML = '', 4000);
+  }
+
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById(`${name}-tab`).classList.add('active');
+    document.getElementById(`tab-${name}`).classList.add('active');
+    const titles = { users: 'Users', forms: 'Check-in Forms', responses: 'Responses' };
+    document.getElementById('pageTitle').textContent = titles[name];
+    if (name === 'users') loadUsers();
+    if (name === 'forms') { loadForms(); }
+    if (name === 'responses') loadFormPills();
+  }
+
+  function formatDT(dt) {
+    return new Date(dt + (dt.endsWith('Z') ? '' : 'Z')).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  function formStatus(form) {
+    const now = new Date();
+    const pub = new Date(form.publish_at + 'Z');
+    const cls = new Date(form.close_at + 'Z');
+    if (now < pub) return '<span class="badge badge-yellow">Scheduled</span>';
+    if (now >= pub && now <= cls) return '<span class="badge badge-green">Active</span>';
+    return '<span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">Closed</span>';
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────────────────
+  async function init() {
+    const token = getToken();
+    if (!token) { window.location.href = 'login.html'; return; }
+    const res = await apiFetch('/me');
+    if (!res.ok) { logout(); return; }
+    const user = await res.json();
+    if (!user.is_admin) { window.location.href = 'dashboard.html'; return; }
+    document.getElementById('adminName').textContent = user.name;
+    loadUsers();
+  }
+
+  // ── USERS ─────────────────────────────────────────────────────────────────
+  async function loadUsers() {
+    const tbody = document.getElementById('usersTable');
+    const res = await apiFetch('/admin/users');
+    const users = await res.json();
+    if (!users.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:1.5rem;">No users yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = users.map(u => `
+      <tr>
+        <td><strong>${u.name}</strong></td>
+        <td style="color:var(--muted)">${u.email}</td>
+        <td>${u.project_name}</td>
+        <td>${u.cohort}</td>
+        <td>${u.is_admin ? '<span class="badge badge-purple">Admin</span>' : '<span class="badge badge-green">Member</span>'}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id}, '${u.name}')">Delete</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  async function createUser() {
+    const payload = {
+      name: document.getElementById('u_name').value.trim(),
+      email: document.getElementById('u_email').value.trim(),
+      password: document.getElementById('u_password').value,
+      project_name: document.getElementById('u_project').value.trim(),
+      cohort: document.getElementById('u_cohort').value.trim(),
+      is_admin: document.getElementById('u_role').value === 'true'
+    };
+    if (!payload.name || !payload.email || !payload.password || !payload.project_name) {
+      showAlert('Please fill all required fields.', 'error'); return;
+    }
+    const res = await apiFetch('/admin/users', { method: 'POST', body: JSON.stringify(payload) });
+    if (res.ok) {
+      showAlert(`✓ User "${payload.name}" created successfully!`);
+      ['u_name','u_email','u_password','u_project'].forEach(id => document.getElementById(id).value = '');
+      loadUsers();
+    } else {
+      const err = await res.json();
+      showAlert(err.detail || 'Failed to create user.', 'error');
+    }
+  }
+
+  async function deleteUser(id, name) {
+    if (!confirm(`Delete user "${name}"? This will also remove their check-in data.`)) return;
+    const res = await apiFetch(`/admin/users/${id}`, { method: 'DELETE' });
+    if (res.ok) { showAlert(`User "${name}" deleted.`); loadUsers(); }
+    else showAlert('Failed to delete user.', 'error');
+  }
+
+  // ── FORMS ─────────────────────────────────────────────────────────────────
+  function addQuestion() {
+    questionCount++;
+    const id = `q${questionCount}`;
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.id = `qblock_${id}`;
+    div.innerHTML = `
+      <div class="q-item-header">
+        <input type="text" class="field input" style="background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.7rem;border-radius:6px;flex:1;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;" placeholder="Question text..." id="qt_${id}" />
+        <button class="btn btn-danger btn-sm" style="margin-left:0.5rem;white-space:nowrap;" onclick="document.getElementById('qblock_${id}').remove()">✕</button>
+      </div>
+      <div class="q-item-body">
+        <div class="field">
+          <label>Type</label>
+          <select id="qtype_${id}" onchange="toggleOptions('${id}')">
+            <option value="text">Short Text</option>
+            <option value="textarea">Long Text</option>
+            <option value="number">Number</option>
+            <option value="select">Dropdown</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Required</label>
+          <select id="qreq_${id}">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="field" id="qopts_${id}" style="display:none;grid-column:1/-1;">
+          <label>Options (comma-separated)</label>
+          <input type="text" id="qoptsval_${id}" placeholder="Option 1, Option 2, Option 3" style="background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.7rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;" />
+        </div>
+      </div>`;
+    document.getElementById('questionsList').appendChild(div);
+  }
+
+  function toggleOptions(id) {
+    const type = document.getElementById(`qtype_${id}`).value;
+    const optsDiv = document.getElementById(`qopts_${id}`);
+    optsDiv.style.display = type === 'select' ? 'block' : 'none';
+  }
+
+  function collectQuestions() {
+    const items = document.querySelectorAll('[id^="qblock_"]');
+    return Array.from(items).map(item => {
+      const id = item.id.replace('qblock_', '');
+      const text = document.getElementById(`qt_${id}`).value.trim();
+      const type = document.getElementById(`qtype_${id}`).value;
+      const required = document.getElementById(`qreq_${id}`).value === 'true';
+      const q = { id, text, type, required };
+      if (type === 'select') {
+        const raw = document.getElementById(`qoptsval_${id}`)?.value || '';
+        q.options = raw.split(',').map(s => s.trim()).filter(Boolean);
+      }
+      return q;
+    });
+  }
+
+  // Convert local datetime-local value to UTC ISO string
+  function toUTC(localVal) {
+    return new Date(localVal).toISOString();
+  }
+
+  async function createForm() {
+    const title = document.getElementById('f_title').value.trim();
+    const desc = document.getElementById('f_desc').value.trim();
+    const publishVal = document.getElementById('f_publish').value;
+    const questions = collectQuestions();
+
+    if (!title || !publishVal) { showAlert('Title and publish date are required.', 'error'); return; }
+    if (!questions.length) { showAlert('Add at least one question.', 'error'); return; }
+    if (questions.some(q => !q.text)) { showAlert('All questions need text.', 'error'); return; }
+
+    const payload = {
+      title, description: desc || null,
+      questions,
+      publish_at: toUTC(publishVal)
+      // close_at auto-set to publish_at + 24h on backend
+    };
+
+    const res = await apiFetch('/admin/forms', { method: 'POST', body: JSON.stringify(payload) });
+    if (res.ok) {
+      showAlert(`✓ Form "${title}" scheduled!`);
+      document.getElementById('f_title').value = '';
+      document.getElementById('f_desc').value = '';
+      document.getElementById('f_publish').value = '';
+      document.getElementById('questionsList').innerHTML = '';
+      questionCount = 0;
+      loadForms();
+    } else {
+      const err = await res.json();
+      showAlert(err.detail || 'Failed to create form.', 'error');
+    }
+  }
+
+  async function loadForms() {
+    const tbody = document.getElementById('formsTable');
+    const res = await apiFetch('/admin/forms');
+    allForms = await res.json();
+    if (!allForms.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--muted);text-align:center;padding:1.5rem;">No forms yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = allForms.map(f => `
+      <tr>
+        <td><strong>${f.title}</strong>${f.description ? `<br><small style="color:var(--muted)">${f.description}</small>` : ''}</td>
+        <td style="color:var(--muted);font-size:0.82rem;">${formatDT(f.publish_at)}</td>
+        <td style="color:var(--muted);font-size:0.82rem;">${formatDT(f.close_at)}</td>
+        <td>${formStatus(f)}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="deleteForm(${f.id}, '${f.title.replace(/'/g, "\\'")}')">Delete</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  async function deleteForm(id, title) {
+    if (!confirm(`Delete form "${title}"? All responses will be lost.`)) return;
+    const res = await apiFetch(`/admin/forms/${id}`, { method: 'DELETE' });
+    if (res.ok) { showAlert(`Form "${title}" deleted.`); loadForms(); }
+    else showAlert('Failed to delete form.', 'error');
+  }
+
+  // ── RESPONSES ─────────────────────────────────────────────────────────────
+  async function loadFormPills() {
+    const res = await apiFetch('/admin/forms');
+    allForms = await res.json();
+    const container = document.getElementById('formPills');
+    if (!allForms.length) {
+      container.innerHTML = '<span style="color:var(--muted);font-size:0.85rem;">No forms created yet.</span>';
+      return;
+    }
+    container.innerHTML = allForms.map(f =>
+      `<button class="form-pill" onclick="loadResponses(${f.id})" id="pill_${f.id}">${f.title}</button>`
+    ).join('');
+  }
+
+  async function loadResponses(formId) {
+    selectedFormId = formId;
+    document.querySelectorAll('.form-pill').forEach(p => p.classList.remove('active'));
+    const pill = document.getElementById(`pill_${formId}`);
+    if (pill) pill.classList.add('active');
+
+    const form = allForms.find(f => f.id === formId);
+    const container = document.getElementById('responsesTable');
+    container.innerHTML = '<div class="spinner" style="margin:1rem 0;"></div>';
+
+    const res = await apiFetch(`/admin/forms/${formId}/responses`);
+    const responses = await res.json();
+
+    if (!responses.length) {
+      container.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;padding:1rem 0;">No responses yet for this form.</p>';
+      return;
+    }
+
+    const questions = form?.questions || [];
+
+    container.innerHTML = `
+      <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1rem;">${responses.length} response${responses.length !== 1 ? 's' : ''}</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Builder</th>
+              <th>Project</th>
+              <th>Submitted</th>
+              ${questions.map(q => `<th>${q.text}</th>`).join('')}
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${responses.map(r => `
+              <tr>
+                <td><strong>${r.user_name || '—'}</strong><br><small style="color:var(--muted)">${r.user_email || ''}</small></td>
+                <td>${r.project_name || '—'}</td>
+                <td style="color:var(--muted);font-size:0.8rem;white-space:nowrap;">${formatDT(r.submitted_at)}</td>
+                ${questions.map(q => `<td style="font-size:0.83rem;">${r.answers[q.id] || '—'}</td>`).join('')}
+                <td><button class="btn btn-danger btn-sm" onclick="deleteResponse(${r.id})">Delete</button></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  async function deleteResponse(id) {
+    if (!confirm('Delete this response?')) return;
+    const res = await apiFetch(`/admin/responses/${id}`, { method: 'DELETE' });
+    if (res.ok) { showAlert('Response deleted.'); loadResponses(selectedFormId); }
+    else showAlert('Failed to delete response.', 'error');
+  }
+
+  init();
+</script>
+</body>
+</html>

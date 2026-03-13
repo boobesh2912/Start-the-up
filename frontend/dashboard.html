@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Start The Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --surface2: #18181f; --border: #252530;
+      --accent: #6c63ff; --accent2: #ff6584; --green: #34d399; --text: #e8e8f0; --muted: #6b6b80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; }
+    h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+    .sidebar {
+      width: 200px; min-height: 100vh; background: var(--surface);
+      border-right: 1px solid var(--border); padding: 1.5rem 0.8rem;
+      position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column;
+    }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem; margin-bottom: 2rem; padding: 0 0.5rem; }
+    .logo span { color: var(--accent); }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.55rem 0.7rem; border-radius: 8px; cursor: pointer;
+      font-size: 0.83rem; color: var(--muted); transition: all 0.15s;
+      margin-bottom: 2px; border: none; background: none; width: 100%; text-align: left;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active { background: rgba(108,99,255,0.12); color: var(--accent); font-weight: 500; }
+    .nav-icon { font-size: 0.95rem; width: 18px; text-align: center; }
+    .sidebar-bottom { margin-top: auto; }
+    .user-info { padding: 0.6rem 0.7rem; border-radius: 8px; background: var(--surface2); margin-bottom: 0.6rem; }
+    .user-info .uname { font-size: 0.82rem; font-weight: 600; }
+    .user-info .uproject { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+    .btn-logout-side {
+      width: 100%; padding: 0.5rem 0.7rem; border-radius: 8px; background: none;
+      border: 1px solid var(--border); color: var(--muted); font-size: 0.78rem;
+      cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-logout-side:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .main { margin-left: 200px; flex: 1; padding: 2rem; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .section-header { margin-bottom: 1.5rem; }
+    .section-header h2 { font-size: 1.3rem; font-weight: 800; }
+    .section-header p { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+
+    .alert { padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem; }
+    .alert-success { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); color: var(--green); }
+    .alert-error { background: rgba(255,101,132,0.1); border: 1px solid rgba(255,101,132,0.3); color: var(--accent2); }
+
+    .form-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.8rem; margin-bottom: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .form-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .form-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .form-meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 1.4rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .form-meta span { background: var(--surface2); padding: 0.2rem 0.55rem; border-radius: 4px; }
+    .question-block { margin-bottom: 1.3rem; }
+    .question-label { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.45rem; }
+    .question-label .req { color: var(--accent2); margin-left: 2px; }
+    .q-input, .q-textarea, .q-select {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 0.65rem 0.9rem; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s;
+    }
+    .q-input:focus, .q-textarea:focus, .q-select:focus { border-color: var(--accent); }
+    .q-textarea { min-height: 90px; resize: vertical; }
+    .q-select option { background: var(--surface2); }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white;
+      border: none; padding: 0.75rem 2rem; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; transition: opacity 0.2s; width: 100%; margin-top: 0.5rem; letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .status-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; margin-bottom: 2rem; }
+    .empty-state { text-align: center; padding: 2rem 1rem; color: var(--muted); }
+    .empty-state .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .empty-state h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .submitted-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3);
+      color: var(--green); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; margin-top: 0.8rem;
+    }
+
+    .response-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem; margin-bottom: 0.7rem; }
+    .response-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; }
+    .response-form-name { font-size: 0.88rem; font-weight: 600; }
+    .response-date { font-size: 0.75rem; color: var(--muted); }
+    .answer-row { font-size: 0.82rem; margin-bottom: 0.5rem; }
+    .answer-q { color: var(--muted); margin-bottom: 0.1rem; }
+    .answer-a { color: var(--text); padding-left: 0.6rem; border-left: 2px solid var(--border); }
+
+    .builders-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+    .builder-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; transition: border-color 0.15s; }
+    .builder-card:hover { border-color: var(--accent); }
+    .builder-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .builder-project { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .progress-bar-wrap { background: var(--surface2); border-radius: 999px; height: 5px; overflow: hidden; margin-bottom: 0.35rem; }
+    .progress-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .progress-label { font-size: 0.73rem; color: var(--muted); }
+    .cohort-tag { font-size: 0.68rem; background: var(--surface2); color: var(--muted); padding: 0.12rem 0.45rem; border-radius: 4px; display: inline-block; margin-bottom: 0.55rem; }
+
+    .launch-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; display: flex; align-items: center; gap: 1rem; }
+    .launch-icon { font-size: 1.6rem; }
+    .launch-name { font-weight: 700; font-size: 0.9rem; }
+    .launch-project { font-size: 0.78rem; color: var(--muted); }
+    .launch-badge { font-size: 0.68rem; background: rgba(52,211,153,0.1); color: var(--green); border: 1px solid rgba(52,211,153,0.25); padding: 0.12rem 0.45rem; border-radius: 4px; margin-top: 0.25rem; display: inline-block; }
+
+    .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 1.5rem auto; display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">Start The <span>Up</span></div>
+  <button class="nav-item active" onclick="showTab('checkin')" id="tab-checkin"><span class="nav-icon">✅</span> Check-in</button>
+  <button class="nav-item" onclick="showTab('builders')" id="tab-builders"><span class="nav-icon">🏗️</span> Builders</button>
+  <button class="nav-item" onclick="showTab('launch')" id="tab-launch"><span class="nav-icon">🚀</span> Launch Wall</button>
+  <button class="nav-item" onclick="showTab('history')" id="tab-history"><span class="nav-icon">📁</span> My History</button>
+  <div class="sidebar-bottom">
+    <div class="user-info">
+      <div class="uname" id="userName">—</div>
+      <div class="uproject" id="userProject">—</div>
+    </div>
+    <button class="btn-logout-side" onclick="logout()">← Sign out</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div id="alertBox"></div>
+
+  <div class="tab-content active" id="checkin-tab">
+    <div class="section-header"><h2>Today's Check-in</h2><p>Fill your progress update for the cohort.</p></div>
+    <div id="formSection"><div class="spinner"></div></div>
+  </div>
+
+  <div class="tab-content" id="builders-tab">
+    <div class="section-header"><h2>Builder Board</h2><p>Everyone's latest progress in the cohort.</p></div>
+    <div id="buildersGrid"><div class="spinner"></div></div>
+  </div>
+
+  <div class="tab-content" id="launch-tab">
+    <div class="section-header"><h2>🚀 Launch Wall</h2><p>Builders who hit 100% — they shipped it.</p></div>
+    <div id="launchGrid" style="display:flex;flex-direction:column;gap:0.8rem;"><div class="spinner"></div></div>
+  </div>
+
+  <div class="tab-content" id="history-tab">
+    <div class="section-header"><h2>My Submissions</h2><p>All your past check-in responses.</p></div>
+    <div id="pastResponses"><div class="spinner"></div></div>
+  </div>
+</main>
+
+<script>
+  const API = window.API_BASE || 'http://localhost:8000';
+  function getToken() { return localStorage.getItem('token'); }
+  function logout() { localStorage.removeItem('token'); window.location.href = 'login.html'; }
+  function apiFetch(path, opts = {}) {
+    const token = getToken();
+    return fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}), ...(opts.headers || {}) } });
+  }
+  function showAlert(msg, type = 'success') {
+    const box = document.getElementById('alertBox');
+    box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+    setTimeout(() => box.innerHTML = '', 4000);
+  }
+  function formatDT(dt) {
+    return new Date(dt + (dt.endsWith('Z') ? '' : 'Z')).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById(`${name}-tab`).classList.add('active');
+    document.getElementById(`tab-${name}`).classList.add('active');
+    if (name === 'builders') loadBuilders();
+    if (name === 'launch') loadLaunchWall();
+    if (name === 'history') loadHistory();
+  }
+
+  async function init() {
+    if (!getToken()) { window.location.href = 'login.html'; return; }
+    try {
+      const res = await apiFetch('/me');
+      if (!res.ok) { logout(); return; }
+      const user = await res.json();
+      if (user.is_admin) { window.location.href = 'admin-dashboard.html'; return; }
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userProject').textContent = user.project_name;
+    } catch { logout(); return; }
+    loadActiveForm();
+  }
+
+  async function loadActiveForm() {
+    const section = document.getElementById('formSection');
+    try {
+      const statusRes = await apiFetch('/forms/active/status');
+      const status = await statusRes.json();
+      if (!status.active) {
+        section.innerHTML = `<div class="status-card"><div class="empty-state"><div class="icon">⏳</div><h3>No active check-in right now</h3><p>Your admin will publish the next form soon.</p></div></div>`;
+        return;
+      }
+      if (status.submitted) {
+        section.innerHTML = `<div class="status-card"><div class="form-title">${status.form_title}</div><div class="submitted-badge">✓ Submitted — you're done for today!</div><p style="color:var(--muted);font-size:0.83rem;margin-top:0.8rem;">Check the <strong>Builders</strong> tab to see the cohort's progress.</p></div>`;
+        return;
+      }
+      const formRes = await apiFetch('/forms/active');
+      if (!formRes.ok) { section.innerHTML = `<div class="status-card"><div class="empty-state"><div class="icon">⏳</div><h3>No active check-in right now</h3></div></div>`; return; }
+      renderForm(await formRes.json());
+    } catch {
+      section.innerHTML = `<div class="status-card"><div class="empty-state"><div class="icon">⏳</div><h3>No active check-in right now</h3></div></div>`;
+    }
+  }
+
+  function renderForm(form) {
+    const section = document.getElementById('formSection');
+    const questionsHTML = form.questions.map(q => {
+      const req = q.required ? '<span class="req">*</span>' : '';
+      let input = '';
+      if (q.type === 'textarea') input = `<textarea class="q-textarea" id="q_${q.id}" placeholder="Your answer..."></textarea>`;
+      else if (q.type === 'select' && q.options?.length) input = `<select class="q-select" id="q_${q.id}"><option value="">Select...</option>${q.options.map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
+      else if (q.type === 'number') input = `<input type="number" class="q-input" id="q_${q.id}" placeholder="0" />`;
+      else input = `<input type="text" class="q-input" id="q_${q.id}" placeholder="Your answer..." />`;
+      return `<div class="question-block"><div class="question-label">${q.text}${req}</div>${input}</div>`;
+    }).join('');
+    const questionsJSON = JSON.stringify(form.questions).replace(/</g, '\\u003c');
+    section.innerHTML = `
+      <div class="form-card">
+        <div class="form-title">${form.title}</div>
+        ${form.description ? `<p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.6rem;">${form.description}</p>` : ''}
+        <div class="form-meta"><span>⏰ Closes: ${formatDT(form.close_at)}</span><span>❓ ${form.questions.length} questions</span><span>📌 24-hour window</span></div>
+        ${questionsHTML}
+        <button class="btn-submit" id="submitBtn" onclick='submitForm(${form.id}, ${questionsJSON})'>Submit Check-in →</button>
+      </div>`;
+  }
+
+  async function submitForm(formId, questions) {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Submitting...';
+    const answers = {}; let valid = true;
+    for (const q of questions) {
+      const el = document.getElementById(`q_${q.id}`);
+      const val = el ? el.value.trim() : '';
+      if (q.required && !val) { showAlert(`Please answer: "${q.text}"`, 'error'); valid = false; break; }
+      answers[q.id] = val;
+    }
+    if (!valid) { btn.disabled = false; btn.textContent = 'Submit Check-in →'; return; }
+    try {
+      const res = await apiFetch(`/forms/${formId}/respond`, { method: 'POST', body: JSON.stringify({ answers }) });
+      if (res.ok) { showAlert('✓ Check-in submitted!'); loadActiveForm(); }
+      else { const err = await res.json(); showAlert(err.detail || 'Failed', 'error'); btn.disabled = false; btn.textContent = 'Submit Check-in →'; }
+    } catch { showAlert('Network error.', 'error'); btn.disabled = false; btn.textContent = 'Submit Check-in →'; }
+  }
+
+  async function loadBuilders() {
+    const grid = document.getElementById('buildersGrid');
+    try {
+      const res = await apiFetch('/builders');
+      const builders = await res.json();
+      if (!builders.length) { grid.innerHTML = `<div class="empty-state"><div class="icon">🏗️</div><h3>No builders yet</h3></div>`; return; }
+      grid.innerHTML = `<div class="builders-grid">${builders.map(b => `
+        <div class="builder-card">
+          <div class="cohort-tag">${b.cohort || 'Cohort 1'}</div>
+          <div class="builder-name">${b.name}</div>
+          <div class="builder-project">${b.project_name}</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${b.progress || 0}%"></div></div>
+          <div class="progress-label">${b.progress || 0}% progress</div>
+        </div>`).join('')}</div>`;
+    } catch { grid.innerHTML = `<p style="color:var(--muted)">Could not load builders.</p>`; }
+  }
+
+  async function loadLaunchWall() {
+    const grid = document.getElementById('launchGrid');
+    try {
+      const res = await apiFetch('/launch-wall');
+      const launched = await res.json();
+      if (!launched.length) { grid.innerHTML = `<div class="empty-state"><div class="icon">🚀</div><h3>No launches yet — be the first!</h3></div>`; return; }
+      grid.innerHTML = launched.map(b => `
+        <div class="launch-card">
+          <div class="launch-icon">🚀</div>
+          <div><div class="launch-name">${b.name}</div><div class="launch-project">${b.project_name}</div><span class="launch-badge">Shipped ✓</span></div>
+        </div>`).join('');
+    } catch { grid.innerHTML = `<p style="color:var(--muted)">Could not load launch wall.</p>`; }
+  }
+
+  async function loadHistory() {
+    const container = document.getElementById('pastResponses');
+    try {
+      const res = await apiFetch('/forms/my-responses');
+      const responses = await res.json();
+      if (!responses.length) { container.innerHTML = `<div class="empty-state"><div class="icon">📁</div><h3>No submissions yet</h3><p>Your responses will appear here.</p></div>`; return; }
+      container.innerHTML = responses.map(r => {
+        const answers = Object.entries(r.answers);
+        return `<div class="response-item">
+          <div class="response-header"><div class="response-form-name">Form #${r.form_id}</div><div class="response-date">${formatDT(r.submitted_at)}</div></div>
+          ${answers.map(([qid, ans]) => `<div class="answer-row"><div class="answer-q">${qid}</div><div class="answer-a">${ans || '—'}</div></div>`).join('')}
+        </div>`;
+      }).join('');
+    } catch { container.innerHTML = `<p style="color:var(--muted)">Could not load history.</p>`; }
+  }
+
+  init();
+</script>
+</body>
+</html>
