@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from .database import Base, SessionLocal, engine
 from .models import Checkin, User, Event
-from .models.checkin_form_model import CheckinForm, FormResponse from .routes import ( admin_router, auth_router, builder_router, checkin_router, events_router, form_router, launch_router, )
+from .models.checkin_form_model import CheckinForm, FormResponse 
+from .routes import ( admin_router, auth_router, builder_router, checkin_router, events_router, form_router, launch_router, )
 from .services.auth_service import hash_password
 
 app = FastAPI(title="Start The Up Builder Tracker", version="2.0.0")
